@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <%- include('includes/head', { title: 'Post title' }) %>
+  <%- include('includes/head', { title: postDetails.title  }) %>
   <link rel="stylesheet" href="/styles/posts.css">
 </head>
 
@@ -12,7 +12,8 @@
    <% for (const postDetail of postDetails){ %>
       <h1><%= postDetail.title %></h1>
       <section id="post-meta">
-        <%= postDetail.summary %>
+        <a href="mailto:" <%= postDetail.email %>> <%= postDetail.name  %> </a> 
+        <time>posted on <%= postDetail.date  %></time>
       </section>
       <hr>
       <section>

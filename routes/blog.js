@@ -32,6 +32,7 @@ router.get(('/view/:id'),async (req,res)=>{
     console.log(postBody);
     if (!postBody || postBody.length===0){  //in case that user manually type in the post number and it's not found on our server
         console.log('hi');
+        res.status(404);
         res.render('404')
     }else{
         res.render('post-detail',{postDetails:postBody});
