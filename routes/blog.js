@@ -46,4 +46,12 @@ router.get('/new-post', async (req,res)=>{
     res.render('create-post',{authors:authorData})
 });
 
+router.get('/edit/:id', async (req,res)=>{
+    const postID = req.params.id;
+    db.query('SELECT ')
+
+
+    res.render('update-post',{authors:authorData})
+});
+
 module.exports =router;
