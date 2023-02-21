@@ -10,16 +10,17 @@
   <%- include('includes/header') %>
   <main id="all-posts">
     <h1>All Posts</h1>
-    <ul>
-      <% for (const post of posts){ %>
-        <li><%= post.title %></li>
-        <li><%= post.summary %></li>
-        <li><%= post.body %></li>
-        <li><%= post.author_name %></li>
-        <li><%= post.date %></li>
-        <br>
-      <%}%>
-    </ul>
+    <% if(!posts){ %>
+      <h2>No post was found. Please try to create new post</h2>
+    <% } else{ %>
+      <ul id="posts-list">
+        <% for (const post of posts){ %>
+          <%- include('includes/post-item',{post:post}) %>
+        <%}%>
+      </ul>
+    <% } %>
+
+
   </main> 
 </body>
 
