@@ -9,14 +9,16 @@
 <body>
   <%- include('includes/header') %>
   <main id="post-detail">
-    <h1>...</h1>
-    <section id="post-meta">
-      ...
-    </section>
-    <hr>
-    <section>
-      <p id="body">...</p>
-    </section>
+   <% for (const postDetail of postDetails){ %>
+      <h1><%= postDetail.title %></h1>
+      <section id="post-meta">
+        <%= postDetail.summary %>
+      </section>
+      <hr>
+      <section>
+        <p id="body"><%= postDetail.body %> </p>
+      </section>
+     <% } %>
   </main>
 </body>
 
