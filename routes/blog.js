@@ -4,12 +4,15 @@ const db = require('../database/database.js')
 
 
 
-router.get('/',(req,res)=>{
+
+router.get('/',async (req,res)=>{
     res.redirect('/post');
 });
 
 router.get('/post',async (req,res)=>{
-    res.render('posts-list')
+    const [postsDATA] = await db.query('SELECT posts.*,authors.name AS author_name FROM blog.posts INNER JOIN authors ON posts.author_id = authors.id;');
+    console.log(postsDATA);
+    res.render('posts-list',{posts:postsDATA});
 });
 
 router.post('/post',async (req,res)=>{

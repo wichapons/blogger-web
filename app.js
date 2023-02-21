@@ -4,6 +4,9 @@ const blogRoutes = require('./routes/blog');
 
 const app = express();
 
+
+
+
 // Activate EJS view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
