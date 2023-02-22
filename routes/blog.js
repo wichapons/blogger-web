@@ -29,7 +29,6 @@ router.get(('/view/:id'),async (req,res)=>{
     const postID = req.params.id;
     console.log(postID);
     const [postBody] = await db.query(`SELECT *  FROM posts INNER JOIN authors ON posts.author_id = authors.id WHERE posts.id = ${postID}`);
-    console.log(postBody);
     if (!postBody || postBody.length===0){  //in case that user manually type in the post number and it's not found on our server
         console.log('hi');
         res.status(404);
@@ -48,15 +47,30 @@ router.get('/new-post', async (req,res)=>{
 
 router.get('/edit/:id', async (req,res)=>{
     const postID = req.params.id;
-    [postData] = await db.query(`SELECT * FROM posts INNER JOIN authors ON posts.author_id = authors.id WHERE posts.id = ${postID}  `)
-
+    [postData] = await db.query(`SELECT posts.*,authors.name FROM posts INNER JOIN authors ON posts.author_id = authors.id WHERE posts.id = ${postID}  `)
+    console.log(postData);
     if (!postData || postData.length === 0){
         res.status(404);
         console.log('hi');
         res.render('404');
-    }
-    console.log(postData);
+    };
+    //console.log('edit post ID:'+postID);
     res.render('update-post',{posts:postData})
+});
+
+router.post(('/view/:id'),async (req,res)=>{
+    const postID = req.params.id;
+    const editedData = req.body;
+    console.log("EDITED POST ID:"+ postID);
+    const [postBody] = await db.query(`UPDATE posts SET title = '${editedData.title}', summary = '${editedData.summary}', body='${editedData.content}'  WHERE posts.id = ${postID}`);
+    console.log(postBody);
+    if (!postBody || postBody.length===0){  //in case that user manually type in the post number and it's not found on our server
+        console.log('hi');
+        res.status(404);
+        res.render('404')
+    }else{
+        res.redirect('/post');
+    } 
 });
 
 module.exports =router;
