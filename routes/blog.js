@@ -73,4 +73,18 @@ router.post(('/view/:id'),async (req,res)=>{
     } 
 });
 
+router.get(('/post/delete/id=:id'),async (req,res)=>{
+    const postID = req.params.id;
+    console.log("Delete POST ID:"+ postID);
+    const [postBody] = await db.query(`DELETE FROM posts WHERE posts.id=${postID}`);
+    console.log(postBody);
+    if (!postBody || postBody.length===0){  //in case that user manually type in the post number and it's not found on our server
+        console.log('hi');
+        res.status(404);
+        res.render('404')
+    }else{
+        res.redirect('/post');
+    } 
+});
+
 module.exports =router;
