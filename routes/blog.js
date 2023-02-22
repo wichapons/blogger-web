@@ -38,7 +38,7 @@ router.get(('/view/:id'),async (req,res)=>{
         res.render('post-detail',{postDetails:postBody});
     }
     
-})
+});
 
 router.get('/new-post', async (req,res)=>{
     const [authorData] = await db.query('SELECT * FROM authors');
@@ -48,10 +48,15 @@ router.get('/new-post', async (req,res)=>{
 
 router.get('/edit/:id', async (req,res)=>{
     const postID = req.params.id;
-    db.query('SELECT ')
+    [postData] = await db.query(`SELECT * FROM posts INNER JOIN authors ON posts.author_id = authors.id WHERE posts.id = ${postID}  `)
 
-
-    res.render('update-post',{authors:authorData})
+    if (!postData || postData.length === 0){
+        res.status(404);
+        console.log('hi');
+        res.render('404');
+    }
+    console.log(postData);
+    res.render('update-post',{posts:postData})
 });
 
 module.exports =router;
